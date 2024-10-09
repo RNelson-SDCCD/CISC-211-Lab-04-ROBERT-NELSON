@@ -100,11 +100,11 @@ asmFunc:
     /* Compare value of transaction, should be >= -1000 and <= 1000 */
     ldr r2, =-1001
     cmp r0, r2
-    blt problem
+    ble problem
     
     ldr r2, =1001
     cmp r0, r2
-    bgt problem
+    bge problem
     
     /* Load the value of balance */
     ldr r2, =balance
@@ -155,30 +155,23 @@ asmFunc:
     problem:
     /* There was no transaction made. Set transaction to 0 */
     ldr r1, =transaction
-    ldr r1, [r1]
-    ldr r1, =0
-    str r1, [r1]
+    ldr r0, =0
+    str r0, [r1]
     
     /* We have a problem. Set we_have_a_problem to 1 */
     ldr r1, =we_have_a_problem
-    ldr r1, [r1]
-    ldr r1, =1
-    str r1, [r1]
+    ldr r0, =1
+    str r0, [r1]
     
     /* Balance is now 0. Set balance to 0 */
-    ldr r0, =balance
-    ldr r0, [r0]
+    ldr r1, =balance
     ldr r0, =0
-    str r0, [r0]
-    
-    /* Branch to done */
-    b done
+    str r0, [r1]
     
     /* Store the value of balance in r0 */
     set_bal:
     ldr r0, =balance
     ldr r0, [r0]
-    str r0, [r0]
     
     /* Branch to done */
     b done
