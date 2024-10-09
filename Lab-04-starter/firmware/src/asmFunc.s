@@ -113,8 +113,8 @@ asmFunc:
     /* Add balance and transaction = temp_bal, update flags, store temp_bal
 	as new bal */
     adds r3, r0, r1
-    str r3, [r2]
     bvs problem	    /* Check for signed overflow */
+    str r3, [r2]
     
     /* Check if bal > 0 or bal < 0 */
     mov r1, r3
@@ -161,11 +161,6 @@ asmFunc:
     /* We have a problem. Set we_have_a_problem to 1 */
     ldr r1, =we_have_a_problem
     ldr r0, =1
-    str r0, [r1]
-    
-    /* Balance is now 0. Set balance to 0 */
-    ldr r1, =balance
-    ldr r0, =0
     str r0, [r1]
     
     /* Store the value of balance in r0 */
